@@ -9,7 +9,7 @@ let CONFIG = {};
 
 // server
 CONFIG.app         =  process.env.APP              || 'dev';
-CONFIG.port        =  process.env.PORT             || '3000';
+CONFIG.port        =  process.env.PORT             || '5000';
 
 
 // telegram bot
