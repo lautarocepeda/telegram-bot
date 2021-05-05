@@ -2,7 +2,7 @@ const { Telegraf }      = require('telegraf');
 const CONFIG            = require('../config/config');
 const utilService       = require('./util.service');
 
-const token             = undefined;
+const token             = CONFIG.token;
 const bot               = new Telegraf( token );
 const secretPath        = `/telegraf/test`;
 
