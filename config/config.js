@@ -9,11 +9,11 @@ let CONFIG = {};
 
 // server
 CONFIG.app         =  process.env.APP              || 'dev';
-CONFIG.port        =  process.env.PORT             || '5000';
+CONFIG.port        =  process.env.PORT             || '3000';
 
 
 // telegram bot
-CONFIG.bot_token   = '1752610717:AAFrmIxgb1L4OB8rjBkOIWb4d2wOEFgmjq4';
+CONFIG.bot_token   = process.env.BOT_TOKEN         || '1752610717:AAFrmIxgb1L4OB8rjBkOIWb4d2wOEFgmjq4';
 
 
 module.exports = CONFIG;

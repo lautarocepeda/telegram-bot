@@ -1,13 +1,14 @@
+// enviroment variables
 const CONFIG    = require('./config/config');
 const logger    = require('morgan')
 
 // server variables
 const express   = require('express');
-const { bot, secretPath } = require('./services/bot.service');
 const app       = express();
 const port      = CONFIG.port;
 
 // bot requires
+const { bot, secretPath } = require('./services/bot.service');
 
 
 
