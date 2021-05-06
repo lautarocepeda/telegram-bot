@@ -1,8 +1,9 @@
-const loggerService = require('../controllers/logger.controller');
+// modules
+const loggerController = require('../controllers/logger.controller');
 
 
 
-const logger = loggerService.getLogger( 'TE' );
+const logger = loggerController.getLogger( 'TE' );
 
 
 module.exports.ReE = (res, err) => {
@@ -24,11 +25,13 @@ module.exports.ReS = (res, data) => {
 }
 
 module.exports.TE = TE = (err_message, log = true) => {
-    let err = toString(err_message);
+    let err = err_message;
 
     if ( log ) {
         logger.error( err );
     }
 
-   throw new Error( err_message );
+    console.error('Error =>', err_message);
+
+    throw new Error( err_message );
 }

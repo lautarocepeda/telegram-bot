@@ -1,6 +1,6 @@
-const log4js    = require('log4js');
+const logger    = require('log4js');
 
-log4js.configure({
+logger.configure({
     appenders: {
         out:     { type: 'console' },
         TE:      { type: 'file', filename: './log_entries/TE.log' },
@@ -8,12 +8,12 @@ log4js.configure({
     },
     categories: { 
         default: { appenders: ['TE', 'out'], level: 'error' },
-        userBot: { appenders: ['userBot'], level: 'info' }
+        userBot: { appenders: ['userBot', 'out'], level: 'info' }
     }
 });
 
 
 
 
-module.exports = log4js;
+module.exports = logger;
 

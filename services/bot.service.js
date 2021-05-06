@@ -1,19 +1,25 @@
+// modules
 const { Telegraf }      = require('telegraf');
+const { TE }            = require('./util.service'); //  TE: Throw Error Response
 const CONFIG            = require('../config/config');
-const utilService       = require('./util.service');
+const loggerController  = require('../controllers/logger.controller');
 
+// variables config
 const token             = CONFIG.bot_token;
+
+// variables
 const bot               = new Telegraf( token );
+const botLogger         = loggerController.getLogger( 'userBot' );
 const secretPath        = `/telegraf/test`;
 
 
 if ( token === undefined ) {
-    utilService.TE('Bot token must be provided...');
+    TE('Bot token must be provided...');
 }
 
 
-bot.catch((err, ctx) => {
-	console.log(`Ooops, encountered an error for ${ctx.updateType}`, err)
+bot.catch( (err, ctx) => {
+	TE(`Ooops, encountered an error for '${ ctx.updateType }' - Message: '${ err.message }'`);
 });
 
 
@@ -22,12 +28,17 @@ bot.use(async (ctx, next) => {
 	const start = new Date();
 	await next();
 	const ms = new Date() - start;
-    console.log(`[Logger][User] ${ ctx.message.from.first_name } - Message: ${ ctx.message.text } | Response time: ${ms}ms`);
+    
+    if ( ctx.updateType != 'poll' ) {
+        botLogger.info( `${ ms }ms [${ ctx.message.chat.username }] '${ ctx.message.chat.first_name }'       [Message] '${ ctx.message.text }'` );
+    }
 });
 
 
 // started message
-bot.start( (ctx) => ctx.reply( `¡Hola ${ctx.message.from.first_name}! Me llamo Loko 😁.\n¿Cómo estás? 🙄` ) );
+bot.start( (ctx) => {
+    ctx.reply( `¡Hola ${ ctx.message.from.first_name }! Me llamo Loko 😁.\n¿Cómo estás? 🙄` ) 
+});
 
 
 // bot commands
@@ -49,10 +60,14 @@ bot.on('text', (ctx) => {
 
 
 bot.launch()
+    .then( () => console.log('Bot started successfully...') )
+    .catch( (e) => {
+        TE( e.toString() );
+    }
+);
 
 
-bot.telegram.setWebhook(`https://selfish-octopus-86.loca.lt${secretPath}`);
-
+bot.telegram.setWebhook( `https://cowardly-earwig-87.loca.lt${secretPath}` );
 
 
 module.exports.bot = bot;
